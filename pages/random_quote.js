@@ -14,7 +14,6 @@ export default function RandomQuote() {
     const handleRandomQuote = () => {
         router.push('/login')
     };
-
     return (
         <Box w='100%' h='100vh'
             bgGradient='linear(to-r ,#a0f0f2,#2e8487)'

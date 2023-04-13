@@ -11,6 +11,7 @@ import {
 import { useRouter } from "next/router";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { activeAuthor } from "@/atoms/activeAuthor";
+import HeaderAtom from "../../atoms/HeaderAtom";
 export default function Authors({ author }) {
   const active_author = useRecoilValue(activeAuthor);
   const setActiveAuthor = useSetRecoilState(activeAuthor);
@@ -19,7 +20,7 @@ export default function Authors({ author }) {
   const router = useRouter();
   const handleCard = (Author) => {
     setActiveAuthor(Author);
-    router.push(`/quotes/author/author=${Author}`);
+    router.push(`/quotes/${Author}`);
   };
   return (
     <Box overflow={"scroll"} height="700px" p="24">
@@ -29,8 +30,7 @@ export default function Authors({ author }) {
           author.results.map((each, index) => {
             return (
               <Card
-              key={each._id}
-              // onClick={() => handleCard(each.name)}
+                key={each._id}
                 _hover={{
                   color: "#0d6163",
                   backgroundColor: "#c5e9eb",
@@ -40,14 +40,21 @@ export default function Authors({ author }) {
                 fontFamily={"serif"}
               >
                 <CardHeader>
-                  <Heading as="h6" size="sm" fontFamily={"serif"}>
-                    {each.name}
-                  </Heading>
+                  <HeaderAtom
+                    headerName={each.name}
+                    as="h6"
+                    size="sm"
+                    fontFamily={"serif"}
+                  />
                 </CardHeader>
                 <CardBody>
                   <b>Info:</b> {each.description}
                 </CardBody>
-                <CardFooter onClick={() => handleCard(each.name)}  _hover={{ fontSize: "xl", textDecoration: "underline" }}>click to see quotes
+                <CardFooter
+                  onClick={() => handleCard(each.name)}
+                  _hover={{ fontSize: "xl", textDecoration: "underline" }}
+                >
+                  click to see quotes
                 </CardFooter>
               </Card>
             );
